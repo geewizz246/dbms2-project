@@ -29,7 +29,7 @@
 	*/
 	
 	$collection = (new MongoDB\Client)->Original_Video->Movies;
-    $result = $collection->find( ['PosterPath' => ['$exists' => true], 'year' => ['$gt' => 1000] ], ['sort' => ['year' => -1], 'limit' => $limit , 'skip' => $skip],['projection' => ['PosterPath' => 1, '_id' => 1]]);
+    $result = $collection->find( ['PosterPath' => ['$exists' => true],'imdbId' => ['$exists' => true], 'year' => ['$gt' => 1990] ], ['sort' => ['year' => -1], `'limit' => $limit , 'skip' => $skip],['projection' => ['PosterPath' => 1, '_id' => 1]]);
 	$total = $collection->count( [ 'PosterPath' => ['$exists' => true], 'year' => ['$gt' => 1990] ]);
 	
 	$total_num_pages = ceil($total / $limit); 
