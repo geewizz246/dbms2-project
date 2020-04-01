@@ -11,19 +11,16 @@
 <body >
 	<div class="container_70">
     <div id='title'>
-			<?php				
-				$back = str_replace(" ","%20",$_SERVER['HTTP_REFERER']);
-				echo "<a href=$back>&lt;&lt;&nbsp;&nbsp;&nbsp;&nbsp;</a>Add Movie Document";
-			?>
-		</div>
+    <a href='index.html'> <<&nbsp;&nbsp;&nbsp;&nbsp;</a>Add Movie Document   
+  </div>
     <div class="center">
-        <form action="">
+        <form action="<?php $_SERVER['PHP_SELF'];?>" method="post" >
            <div class="row">
                 <div class="col-25">
                     <p>Title</p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="Movie Title" type="text">
+                    <input name="title" placeholder="Movie Title" type="text">
                 </div>
            </div>
            <div class="row">
@@ -31,7 +28,7 @@
                     <p>Release Year</p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="Release Year" type="text">
+                    <input name="rYear" placeholder="Release Year" type="text">
                 </div>
            </div>
            <div class="row">
@@ -39,7 +36,7 @@
                     <p>IMDB ID</p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="IMDB ID"  type="text">
+                    <input name="id" placeholder="IMDB ID"  type="text">
                 </div>
            </div>
            <div class="row">
@@ -47,11 +44,11 @@
                     <p>MPAA Rating </p>
                 </div>
                 <div class="col-75">
-                <select id="cars">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
+                <select name="rating" id="rate">
+                    <option value="volvo">G</option>
+                    <option value="saab">PG</option>
+                    <option value="mercedes">PG-13</option>
+                    <option value="audi">Rated R</option>
                 </select>
                 </div>
            </div>
@@ -60,11 +57,14 @@
                     <p>Genre</p>
                 </div>
                 <div class="col-75">
-                <select style="padding: 20px;" id="cars">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
+                <select name="genre" style="padding: 20px;" id="gen">
+                    <option value="volvo">Comedy</option>
+                    <option value="saab">Action</option>
+                    <option value="mercedes">Horror</option>
+                    <option value="audi">Sci-Fi</option>
+                    <option value="audi">Adventure</option>
+                    <option value="audi">Crime</option>
+                    <option value="audi">Family</option>
                 </select>
                 </div>
            </div>
@@ -73,7 +73,7 @@
                     <p>Viewer Votes</p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="Viewer Votes" type="text">
+                    <input name="votes" placeholder="Viewer Votes" type="text">
                 </div>
            </div>
            <div class="row">
@@ -81,7 +81,7 @@
                     <p>Run Time </p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="Run Time" type="text">
+                    <input name="runTime" placeholder="Run Time" type="text">
                 </div>
            </div>
            <div class="row">
@@ -89,7 +89,7 @@
                     <p>Director </p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="Director" type="text">
+                    <input name="director" placeholder="Director" type="text">
                 </div>
            </div>
            <div class="row">
@@ -97,15 +97,15 @@
                     <p>Cast (Comma seperated list)</p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="Cast" type="text">
+                    <input name="cast" placeholder="Cast" type="text">
                 </div>
            </div>
            <div class="row">
                 <div class="col-25">
-                    <p>Post Path</p>
+                    <p>Poster Path</p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="Post Path" type="text">
+                    <input name="postPath" placeholder="Post Path" type="text">
                 </div>
            </div>
            <div class="row">
@@ -113,14 +113,42 @@
                     <p>Movie Plot</p>
                 </div>
                 <div class="col-75">
-                    <input style="padding-bottom:100px;" type="text" placeholder="Write something..">
+                    <input name="moviePlot" style="padding-bottom:100px;" type="text" placeholder="Write something..">
                 </div>
            </div>
          <div class="row" style="margin: 20px; ">
          <input type="submit" value="Submit">
          </div>
         </form>
+        <?php
+            require_once "vendor/autoload.php";
+            $id = (isset($_POST['id']) ? $_POST['id'] : null );
+            $title = (isset($_POST['title']) ? $_POST['title'] : null );
+            $releaseYear= (isset($_POST['rYear']) ? $_POST['rYear'] : null );
+            $rating=(isset($_POST['rating']) ? $_POST['rating'] : null );
+            $genre=(isset($_POST['genre']) ? $_POST['genre'] : null );
+            $votes=(isset($_POST['votes']) ? $_POST['votes'] : null );
+            $runTime=(isset($_POST['runTime']) ? $_POST['runTime'] : null );
+            $director=(isset($_POST['director']) ? $_POST['director'] : null );
+            $cast=(isset($_POST['cast']) ? $_POST['cast'] : null );
+            $postPath=(isset($_POST['postPath']) ? $_POST['postPath'] : null );
+            $moviePlot=(isset($_POST['moviePlot']) ? $_POST['moviePlot'] : null );
+
+
+            if ((strlen(trim($id)) != 0) && (strlen(trim($title)) != 0) && (strlen(trim($releaseYear)) != 0) &&(strlen(trim($rating)) != 0) &&(strlen(trim($rating)) != 0) &&(strlen(trim($genre)) != 0) &&(strlen(trim($votes)) != 0) &&(strlen(trim($runTime)) != 0) &&(strlen(trim($director)) != 0) && (strlen(trim($cast)) != 0) &&(strlen(trim($postPath)) != 0) &&(strlen(trim($moviePlot)) != 0))
+            {
+                if((!empty($id)) &&(!empty($title)) && (!empty($releaseYear)) && (!empty($rating)) && (!empty($genre)) && (!empty($votes)) && (!empty($runTime)) &&(!empty($director)) && (!empty($cast)) && (!empty($postPath)) && (!empty($moviePlot)) )
+                {
+                    
+                    $collection = (new MongoDB\Client)->Original_Video->Movies;
+                    $collection->insertOne(["title"=>"$title", "year"=> "$releaseYear","imdbId"=>"$id","mpaaRating"=>"$rating","genre"=>"$genre","viewerVotes"=>"$votes","runtime"=>"$runTime","director"=>"$director","cast"=>"$cast","PosterPath"=>"$postPath","plot"=>"$moviePlot"]);
+                }
+            }
+
+        
+        ?>
     </div>
+
     </div>
 </body>
 </html>
