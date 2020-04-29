@@ -21,7 +21,7 @@
     	<div id='title'>
 			<?php				
 				$back = str_replace(" ","%20",$_SERVER['HTTP_REFERER']);
-				echo "<a href=$back>&lt;&lt;&nbsp;&nbsp;&nbsp;&nbsp;</a>Movie Name Search (Title Includes)";
+				echo "<a href=index.html>&lt;&lt;&nbsp;&nbsp;&nbsp;&nbsp;</a>Movie Name Search (Title Includes)";
 			?>
 		</div>
 		<div class="center">
@@ -67,7 +67,7 @@
 	
 ?>
 <?php
-if(!empty($_SESSION['movieTitle'])){
+if(!empty($_SESSION['search'])){
 	echo "<p>Movie Title Includes: ".$_SESSION['search']."</p>";
 	echo "<p>Number of Movies Found <strong>". $_SESSION['movieCount']."</strong></p>";
 	}
