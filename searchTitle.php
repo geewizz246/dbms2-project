@@ -31,7 +31,7 @@
 					<p>Enter IMDB ID</p>
 				</div>
 				<div class="col-75">
-					<input type="text" placeholder="Enter Movie Title" name="movieTitle">
+					<input type="text" placeholder="Enter Movie Title" name="movieTitle" required>
 				</div>
 			</div>
 			<div class="row"style="margin-top: 20px;">

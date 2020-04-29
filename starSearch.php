@@ -71,7 +71,7 @@
                     <p>Title</p>
                 </div>
                 <div class="col-75">
-                    <input placeholder="Actor Name" id="castname" name="cast" type="text">
+                    <input placeholder="Actor Name" id="castname" name="cast" type="text" required>
                 </div>
 			</div>
 			<div class="row">
