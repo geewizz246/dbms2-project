@@ -2,7 +2,7 @@
 	session_start();
 
 	/** Show the document in JSON format. */
-	function showDocument($docId) {
+	function getDocument($docId) {
 		if (!empty($docId))
 		{
 			$collection = (new MongoDB\Client)->Original_Video->Movies;
@@ -12,9 +12,6 @@
 				// Convert data to JSON representation and display it
 				$data = $result->jsonSerialize();
 				$json = json_encode($data, JSON_PRETTY_PRINT);
-
-				echo "<h3>IMDB ID: $docId </h3><br>";
-				echo $json;
 
 				// Save it to the session
 				$_SESSION['imdbId'] = $docId;
@@ -39,11 +36,21 @@
 
 				$oldDoc = $collection->findOne(['imdbId' => $docId]);
 
-				// Update the document
-				$result = $collection->updateOne(
-					[ 'imdbId' => $docId ], 
-					[ '$set' => [ $field => $value ] ],
-				);
+				if (!empty($value)) {
+					// Update field in document
+					$value = is_numeric($value) ? (int) $value : $value;
+
+					$result = $collection->updateOne(
+						[ 'imdbId' => $docId ], 
+						[ '$set' => [ $field => $value ] ],
+					);
+				} else {
+					// Remove field from document
+					$result = $collection->updateOne(
+						[ 'imdbId' => $docId ],
+						[ '$unset' => [ $field => "" ] ],
+					);
+				}
 
 				if ($result->getModifiedCount() != 0) {
 					// Get the modified document
@@ -98,14 +105,12 @@
 		  		<div class="row"style="margin-top: 20px;">
 			  		<input type="submit" value="Display Movie Document" name="btnDisplay">
 				</div>
-				<div class="row" style="margin-top: 20px;">
-					<?php 
-						// If btnDisplay is clicked...
-						if (array_key_exists('btnDisplay', $_POST) && empty($updatedDoc)) {
-							$originalDoc = showDocument($id);
-						}
-					?>
-				</div>
+				<?php 
+					// If btnDisplay is clicked...
+					if (array_key_exists('btnDisplay', $_POST) && empty($updatedDoc)) {
+						$originalDoc = getDocument($id);
+					}	
+				?>
 
 				<div class="row" style="margin-top: 20px;">
 					<?php		
@@ -122,16 +127,23 @@
 
 				<!-- Show the prompt for updating document fields -->
 				<?php if (!empty($originalDoc) && empty($updatedDoc)): ?>
-				<div id="update-container" style="margin-top: 40px;">		
+				<div id="update-container" style="margin-top: 40px;">
+					<div class="row" style="margin-top: 20px;">
+						<h3><?php echo "IMDB ID:" . $_SESSION['imdbId']; ?></h3>
+
+						<pre style="white-space: pre-wrap">
+							<?php echo "<br>" . $originalDoc ?>
+						</pre>
+					</div>
 					<div class="row" style="margin-top: 20px;">
 						<div class="col-25">
-							<p style="float:right;">Field Name </p>
+							<p style="float: right; padding-right: 10px;">Field Name </p>
 						</div>
 						<div class="col-25">
 							<input type="text" placeholder="Field Name" name="fieldName">
 						</div>
 						<div class="col-25">
-							<p style="float:right;">New field value </p>
+							<p style="float: right; padding-right: 10px;">New field value </p>
 						</div>
 						<div class="col-25">
 							<input type="text" placeholder="New Value" name="newValue">
@@ -150,7 +162,9 @@
 						<h2>ORIGINAL DOCUMENT</h2>
 						<h3><?php echo "IMDB ID: $id"; ?></h3>
 						
-						<p><?php echo $originalDoc; ?></p>
+						<pre style="white-space: pre-wrap; font-size: 1.2em;">
+							<?php echo "<br>" . $originalDoc; ?>
+						</pre>
 					</div>
 
 					<div class="row">
@@ -160,15 +174,16 @@
 								echo "IMDB ID: " . (new MongoDB\Model\BSONDocument(json_decode($updatedDoc)))['imdbId'];
 							?>
 						</h3>
-						<div>
+						<pre style="white-space: pre-wrap; font-size: 1.2em;">
 							<?php
-								echo $updatedDoc;
+							
+								echo "<br>" . $updatedDoc;
 
 								// Reset session variables
 								$id = $originalDoc = $updatedDoc = null;
 								$_SESSION['imdbId'] = $_SESSION['originalDoc'] = $_SESSION['updatedDoc'] = null;
 							?>
-						</div>
+						</pre>
 					</div>
 				</div>
 				<?php endif; ?>

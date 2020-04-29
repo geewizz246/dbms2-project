@@ -146,45 +146,7 @@
 				echo "<br>";
 			}	
 			echo "</div>";
-			echo "<div class='pagination'>";	
-			if ($page >= $start_movement)
-			{
-				$start = $page-$start_offset;
-			}
-			else
-			{
-				$start = 1;
-			}
-			if ($page != 1)
-			{
-				echo '<a href="?zpage='.$prev.'&id='.$theID.'">Previous</a>';
-			}
-			if (($page < $total_num_pages - $start_offset) && ($total_num_pages > $start+$range))
-			{
-				for ($x=$start;$x<=$start+$range;$x++)
-				{	
-					if ($x > 0)
-					{
-						echo ' <a href="?zpage='.$x.'&id='.$theID.'" class = '. ($page == $x ? "active" : "").'>'.$x.'</a>';
-					}
-				}
-			}
-			else
-			{
-				for ($x=$total_num_pages-$range;$x<=$total_num_pages;$x++)
-				{
-					if ($x > 0)
-					{
-						echo ' <a href="?zpage='.$x.'&id='.$theID.'"  class = '. ($page == $x ? "active" : "").'>'.$x.'</a>';
-					}
-				}	
-			}
-			if($page * $limit < $total) 
-			{
-				echo ' <a href="?zpage='.$next.'&id='.$theID.'">Next</a>';
-			}
-			echo "</div>";
-			
+			include "pagenation.php";
 		}	
   ?>
 </body>
