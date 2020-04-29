@@ -46,7 +46,7 @@
 		$result = searchDatabase($_SESSION['cast'], $collection, $_SESSION['position'], $limit, $skip);
 	}
 	
-	if ($_SESSION['count']) {
+	if (isset($_SESSION['count'])) {
 		$total = $_SESSION['count'];
 		$total_num_pages = ceil($total / $limit);
 	}
@@ -95,7 +95,7 @@
 			</div>
 			<div class="row">
 				<?php
-					if(!empty($_SESSION)){
+					if(!empty($_SESSION['cast']) && !empty($_SESSION['position']) && !empty($_SESSION['count'])){
 						echo "<p>Star Name Includes: ".$_SESSION['cast']."</p>";
 						if($_SESSION['position'] == 'Any'){
 							echo "<p>Star in".$_SESSION['position']."position in the cast list</p>";
