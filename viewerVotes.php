@@ -13,6 +13,13 @@ function getViewerVotes($dbCollection){
 	
 </head>
 <body>
+
+	<div class="container_80">
+	<div id='title'>
+		<a href='index.html'> <<&nbsp;&nbsp;&nbsp;&nbsp;</a>Viewer Votes greater than 1 million		
+	</div>
+ <div class="inner">
+
 <?php
 	$result = [];
 	require_once "vendor/autoload.php";
@@ -24,10 +31,14 @@ function getViewerVotes($dbCollection){
 	$prev  = ($page - 1);
 	$range = 10; 		
 	$start_offset = ceil($range / 2); 	
-	$_SESSION["BackLink"] = "searchTitle.php?page=$page";
+	$_SESSION["BackLink"] = "viewerVotes.php?page=$page";
 
 	$collection = (new MongoDB\Client)->Original_Video->Movies;
 	$result = getViewerVotes($collection);
+
+	$total = $collection->count( ['viewerVotes'=> ['$gt' => 1000000]]);
+
+	$total_num_pages = ceil($total / $limit);
 
 if(!empty($result)){
 		echo "<table>";
@@ -49,11 +60,16 @@ if(!empty($result)){
 				}
 			echo "</tbody>";
 		echo "</table>";
+
+
 }
 
 
+include "pagenation.php";
 
 ?>
+
+</div>
 
 </body>
 
