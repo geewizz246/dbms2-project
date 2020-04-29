@@ -44,11 +44,11 @@
                     <p>MPAA Rating </p>
                 </div>
                 <div class="col-75">
-                <select name="rating" id="rate">
-                    <option value="volvo">G</option>
-                    <option value="saab">PG</option>
-                    <option value="mercedes">PG-13</option>
-                    <option value="audi">Rated R</option>
+                <select name="rating" id="rate" style="padding: 0px;">
+                    <option value="G">G</option>
+                    <option value="PG">PG</option>
+                    <option value="PG-13">PG-13</option>
+                    <option value="R">Rated R</option>
                 </select>
                 </div>
            </div>
@@ -57,14 +57,14 @@
                     <p>Genre</p>
                 </div>
                 <div class="col-75">
-                <select name="genre" style="padding: 20px;" id="gen">
-                    <option value="volvo">Comedy</option>
-                    <option value="saab">Action</option>
-                    <option value="mercedes">Horror</option>
-                    <option value="audi">Sci-Fi</option>
-                    <option value="audi">Adventure</option>
-                    <option value="audi">Crime</option>
-                    <option value="audi">Family</option>
+                <select name="genre" style="padding: 0px;" id="gen">
+                    <option value="Comedy">Comedy</option>
+                    <option value="Action">Action</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Crime">Crime</option>
+                    <option value="Family">Family</option>
                 </select>
                 </div>
            </div>
