@@ -4,7 +4,7 @@
 	function searchDatabase($searchParam, $dbCollection, $pos){
 		if(is_string($searchParam)){
 			$cast='cast';
-			if($pos != 'any'){
+			if($pos != 'Any'){
 				$cast= 'cast.'.$pos;
 			}
 			$result = $dbCollection->find( [$cast => ['$regex' => $searchParam]]);
@@ -48,6 +48,12 @@
 <div id='title'>
 			<?php				
 				$back = str_replace(" ","%20",$_SERVER['HTTP_REFERER']);
+				if(isset($_GET['cast']) && isset($_GET['position'])){
+					//code to fix the back button when page had query string
+					$url = explode('/', $back );
+					array_pop($url);
+					$back = implode('/', $url);
+				}
 				echo "<a href=$back>&lt;&lt;&nbsp;&nbsp;&nbsp;&nbsp;</a>Star Search (Partial Name...)";
 			?>
 		</div>
