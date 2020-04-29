@@ -13,7 +13,15 @@
 		2.	Find one record with "_id" field equals to "new MongoDB\BSON\ObjectID($theID)"
 		3.	Get "comments" value and store it in "$comCount"
 	*/
-			
+	$collection = (new MongoDB\Client)->Original_Video->Movies;
+	$item = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($theID)]);	
+	if (isset($item['comments'])){
+		$comCount = $item['comments'];
+	}
+	else
+	{
+		$comCount = 0;
+	}
 ?>
 <div class="container_50">
 	<div id='title'>
@@ -24,7 +32,7 @@
     <div class="row">
 	  <div class="col-25">
 	  <?php
-		if (isset($item['PosterPath']))
+			if (isset($item['PosterPath']))
 		{
 			$img = $item['PosterPath'];
 			echo "<img src=$img width='90%' height='225'/>";
@@ -80,7 +88,17 @@
 				3.	Increment the "comments" field of the "Movies" collection form "_id" field equals "new MongoDB\BSON\ObjectID($theID)"
 				4.	Get the "comments" value from "Movies" collection after the update, store the amount in "$comCount"
 			*/
-			
+			$commentCollection = (new MongoDB\Client)->Original_Video->Comments;
+			$commentCollection->insertOne($theArr);
+			$collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($theID)],['$inc'=>['comments'=> 1]]);
+			$item = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($theID)]);	
+			if (isset($item['comments'])){
+				$comCount = $item['comments'];
+			}
+			else
+			{
+				$comCount = 0;
+			}
 		}			
 		if ($comCount > 0)	
 		{
@@ -102,8 +120,9 @@
 				2.	Get all records with "parentID" field equals to "new MongoDB\BSON\ObjectID($theID)]" sorted by "_id" in descending order, limit by "$limit" and skip by "$skip"
 				3.	Count number of records for "parentID" field equals to "new MongoDB\BSON\ObjectID($theID)" and store value in "$total"			
 			*/
-						
-			
+			$commentCollection = (new MongoDB\Client)->Original_Video->Comments;
+			$result = $commentCollection->find(['parentID'=>new MongoDB\BSON\ObjectID($theID)], ['$limit' => $limit, '$skip'=> $skip]);		
+			$total = $commentCollection->count(['parentID'=>new MongoDB\BSON\ObjectID($theID)]);
 			
 			
 			
