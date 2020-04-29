@@ -1,3 +1,3 @@
 # dbms2-project
 
-Add a comments collection or aint wont work
+Add a comments collection or it wont work
