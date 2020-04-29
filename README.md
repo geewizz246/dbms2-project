@@ -1,3 +1,3 @@
-# niggas.indian.degrees
+# dbms2-project
 
-How these men aint make no readme
+Add a comments collection or aint wont work
