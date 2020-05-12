@@ -87,10 +87,7 @@
 <body >
 	<div class="container_70">
     	<div id='title'>
-			<?php				
-				$back = str_replace(" ","%20",$_SERVER['HTTP_REFERER']);
-				echo "<a href=$back>&lt;&lt;&nbsp;&nbsp;&nbsp;&nbsp;</a>Update movies in collection";
-			?>
+            <a href="index.html">&lt;&lt;&nbsp;&nbsp;&nbsp;&nbsp;</a>Update movies in collection
 		</div>
 		<div class="center">
         	<form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -131,7 +128,7 @@
 					<div class="row" style="margin-top: 20px;">
 						<h3><?php echo "IMDB ID:" . $_SESSION['imdbId']; ?></h3>
 
-						<pre style="white-space: pre-wrap">
+						<pre style="white-space: pre-wrap; font-size: 1.2em;">
 							<?php echo "<br>" . $originalDoc ?>
 						</pre>
 					</div>

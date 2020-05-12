@@ -5,12 +5,14 @@
 			$cast='cast';
 			if($pos != 'Any'){
 				$cast= 'cast.'.$pos;
-			}
+            }
+            
+            $regex = new MongoDB\BSON\Regex($searchParam, 'i');
 			$result = $dbCollection->find( 
-				[$cast => ['$regex' => $searchParam]],
+				[$cast => ['$regex' => $regex]],
 				['limit' => $limit, 'skip' => $skip] 
 			);
-			$_SESSION['count'] = $dbCollection->count( [$cast => ['$regex' => $searchParam]]);
+			$_SESSION['count'] = $dbCollection->count( [$cast => ['$regex' => $regex]]);
 			$_SESSION['cast'] = $searchParam;
 			$_SESSION['position'] = $pos;
 			return $result;
@@ -68,7 +70,7 @@
 		<form action="starSearch.php" method="get">
 			<div class="row">
                 <div class="col-25">
-                    <p>Title</p>
+                    <p>Actor Name</p>
                 </div>
                 <div class="col-75">
                     <input placeholder="Actor Name" id="castname" name="cast" type="text" required>
@@ -81,14 +83,14 @@
                 <div class="col-75">
                     <table>
 						<tr>
-						<th> <input type="radio" id="position" name="position" value="Any" checked>Any </th>
+						<th> <input type="radio" id="position" name="position" value="Any" checked>Any</th>
 						<th> <input type="radio" id="position" name="position" value="0">First</th>
 						<th> <input type="radio" id="position" name="position" value="1">Second</th>
 						</tr>
 						<tr>
-						<th> <input type="radio" id="position" name="position" value="2">third </th>
-						<th> <input type="radio" id="position" name="position" value="3">forth</th>
-						<th> <input type="radio" id="position" name="position" value="4">fifth</th>
+						<th> <input type="radio" id="position" name="position" value="2">Third </th>
+						<th> <input type="radio" id="position" name="position" value="3">Fourth</th>
+						<th> <input type="radio" id="position" name="position" value="4">Fifth</th>
 						</tr>
 					</table>
                 </div>
